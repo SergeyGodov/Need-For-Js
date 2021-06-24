@@ -78,3 +78,76 @@ table {
     background-color: #fff;
     left: 145px;
 }
+.start {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 2rem 0;
+    text-align: center;
+    z-index: 200;
+    color: #fff;
+    font-size: 1.5rem;
+    background: black;
+    cursor: pointer;
+    font-family: sans-serif;
+    font-weight: 700;
+}
+.score {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color:black;
+    padding: 1rem 0;
+    z-index: 200;
+    font-size: 1.5rem;
+    color: skyblue;
+    text-align: center;
+    font-family:sans-serif;
+    font-weight: 500;
+}
+.traffic {
+    position: absolute;
+    top:40%;
+    left: 10px;
+    font-size: 1.5rem;
+    font-family:sans-serif;
+    
+}
+.text {
+    padding: 20px;
+}
+.value_traffic{
+    padding: 5px;
+}
+.value_speed {
+    padding: 5px;
+}
+.minus {
+    font-size: 20px;
+    height: 45px;
+    width: 45px;
+    border-radius: 50%;
+    border: 2;
+    cursor: pointer;
+    background-color: red;
+}
+.plus {
+    font-size: 20px;
+    height: 45px;
+    width: 45px;
+    border-radius: 50%;
+    border: 2;
+    cursor: pointer;
+    background-color: green;
+}
+.speed {
+    position: absolute;
+    top:50%;
+    left: 9px;
+    font-size: 1.5rem;
+    font-family:sans-serif;
+}
+

@@ -4,8 +4,14 @@ const score = document.querySelector('.score');
 const game = document.querySelector('.game');
 const gameArea = document.querySelector('.gameArea'),
 car = document.createElement('div');
+const music = new Audio('audio.mp3');
 car.classList.add('car');
 const start = document.querySelector('.start');
+const traffic = document.querySelector('.traffic');
+const speed = document.querySelector('.speed');
+let valueSpeed = document.querySelector('.value_speed');
+valueSpeed = Number.parseInt(valueSpeed);
+console.log(valueSpeed);
 const keys = {
     ArrowUp: false,
     ArrowDown: false,
@@ -15,9 +21,10 @@ const keys = {
 const setting = {
     start: false,
     score: 0,
-    speed: 5,
+    speed: 6,
     traffic: 2.5
 };
+
 
 function getQuantityElements(heightElement) {
    return document.documentElement.clientHeight / heightElement + 1;
@@ -25,6 +32,10 @@ function getQuantityElements(heightElement) {
 
 function playGame(){
     if(setting.start) {
+        setting.score += setting.speed;
+        score.innerHTML = 'SCORE<br>' + setting.score;
+        
+       
         moveRoad();
         moveEnemy();
         if(keys.ArrowLeft && setting.x > 0) {
@@ -53,7 +64,13 @@ const getRandomEnemy = (max) => Math.floor((Math.random() * max) + 1);
 
 function startGame(){
     start.classList.add('hide');
-
+    traffic.classList.add('hide');
+    speed.classList.add('hide');
+    gameArea.innerHTML = '';
+    car.style.left = '125px';
+    car.style.top = 'auto';
+    car.style.bottom = '10px';
+music.play();
     for (let i = 0; i < getQuantityElements(100); i++) {
         const line = document.createElement('div');
         line.classList.add('line');
@@ -72,7 +89,7 @@ function startGame(){
         no-repeat`;
         gameArea.appendChild(enemy);
     }
-
+    setting.score = 0;
     setting.start = true;
     gameArea.appendChild(car);
     setting.x = car.offsetLeft;
@@ -110,19 +127,36 @@ if(line.y >= document.documentElement.clientHeight) {
 function moveEnemy() {
     let enemy = document.querySelectorAll('.enemy');
     enemy.forEach(function(item){
+        let carReact = car.getBoundingClientRect();
+        let enemyReact = item.getBoundingClientRect();
+
+        if (carReact.top <= enemyReact.bottom && 
+            carReact.right >= enemyReact.left && 
+            carReact.left <= enemyReact.right &&
+            carReact.bottom >= enemyReact.top) {
+    music.pause();
+score.style.top = start.offsetHeight;
+setting.start = false;
+start.classList.remove('hide');
+traffic.classList.remove('hide');
+speed.classList.remove('hide');
+
+        }
       item.y += setting.speed / 2;
       item.style.top = item.y + 'px';
       if (item.y >= document.documentElement.clientHeight){
         item.y = -100 * setting.traffic;
         item.style.left = Math.floor(Math.random() * (gameArea.offsetWidth - 50)) + 'px';
-
+        
     }
     });
 
    
 }
 
+
 start.addEventListener('click', startGame); 
 document.addEventListener('keydown', startRun);
 document.addEventListener('keyup', stopRun);
 
+console.dir(music);
