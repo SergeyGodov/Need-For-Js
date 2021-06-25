@@ -93,7 +93,7 @@ table {
     text-align: center;
     z-index: 200;
     font-size: 1.5rem;
-    background: rgb(68, 3, 112);
+    background: rgb(31, 29, 32);
     color: skyblue;
     border-radius: 20%;
     cursor: pointer;
@@ -105,7 +105,7 @@ table {
     top: 10px;
     right: 10px;
     width: 25%;
-    background: rgb(68, 3, 112);
+    background: rgb(31, 29, 32);
     padding: 1rem 0;
     z-index: 200;
     font-size: 1.5rem;
