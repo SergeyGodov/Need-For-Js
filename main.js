@@ -1,10 +1,12 @@
 'use strict';
 const MAX_ENEMY = 7;
+const HEIGHT_ELEM = 100;
 const score = document.querySelector('.score');
 const game = document.querySelector('.game');
 const gameArea = document.querySelector('.gameArea'),
 car = document.createElement('div');
 const music = new Audio('audio.mp3');
+const music2 = new Audio('audio2.mp3');
 car.classList.add('car');
 const start = document.querySelector('.start');
 const traffic = document.querySelector('.traffic');
@@ -22,12 +24,12 @@ const setting = {
     start: false,
     score: 0,
     speed: 6,
-    traffic: 2.5
+    traffic: 2.5,
 };
 
 
 function getQuantityElements(heightElement) {
-   return document.documentElement.clientHeight / heightElement + 1;
+   return (gameArea.offsetHeight / heightElement) + 1;
 }
 
 function playGame(){
@@ -63,6 +65,7 @@ setting.y -=setting.speed;
 const getRandomEnemy = (max) => Math.floor((Math.random() * max) + 1); 
 
 function startGame(){
+    gameArea.style.minWidth = 300 + 'px';
     start.classList.add('hide');
     traffic.classList.add('hide');
     speed.classList.add('hide');
@@ -71,18 +74,19 @@ function startGame(){
     car.style.top = 'auto';
     car.style.bottom = '10px';
 music.play();
-    for (let i = 0; i < getQuantityElements(100); i++) {
+    for (let i = 0; i < getQuantityElements(HEIGHT_ELEM); i++) {
         const line = document.createElement('div');
         line.classList.add('line');
-        line.style.top = (i * 100) + 'px';
-        line.y = i * 100;
+        line.style.top = (i * HEIGHT_ELEM) + 'px';
+        line.style.height = (HEIGHT_ELEM / 2) + 'px';
+        line.y = i * HEIGHT_ELEM;
         gameArea.appendChild(line);
     }
-
-    for (let i = 0; i < getQuantityElements(100 * setting.traffic); i++) {
+    
+    for (let i = 0; i < getQuantityElements(HEIGHT_ELEM * setting.traffic); i++) {
         const enemy = document.createElement('div');
         enemy.classList.add('enemy');
-        enemy.y = -100 * setting.traffic * (i + 1);
+        enemy.y = -HEIGHT_ELEM * setting.traffic * (i + 1);
         enemy.style.left = Math.floor(Math.random() * (gameArea.offsetWidth - 50)) + 'px';
         enemy.style.top = enemy.y + 'px';
         enemy.style.background = `transparent url(./image/enemy${getRandomEnemy(MAX_ENEMY)}.png) center / cover 
@@ -118,8 +122,8 @@ function moveRoad() {
 line.y += setting.speed;
 line.style.top = line.y + 'px';
 
-if(line.y >= document.documentElement.clientHeight) {
-    line.y = -100;
+if(line.y >= gameArea.offsetHeight) {
+    line.y = -HEIGHT_ELEM;
 }
     });
 }
@@ -135,7 +139,8 @@ function moveEnemy() {
             carReact.left <= enemyReact.right &&
             carReact.bottom >= enemyReact.top) {
     music.pause();
-score.style.top = start.offsetHeight;
+music2.play();
+    
 setting.start = false;
 start.classList.remove('hide');
 traffic.classList.remove('hide');
@@ -144,7 +149,7 @@ speed.classList.remove('hide');
         }
       item.y += setting.speed / 2;
       item.style.top = item.y + 'px';
-      if (item.y >= document.documentElement.clientHeight){
+      if (item.y >= gameArea.offsetHeight){
         item.y = -100 * setting.traffic;
         item.style.left = Math.floor(Math.random() * (gameArea.offsetWidth - 50)) + 'px';
         
@@ -159,4 +164,3 @@ start.addEventListener('click', startGame);
 document.addEventListener('keydown', startRun);
 document.addEventListener('keyup', stopRun);
 
-console.dir(music);
